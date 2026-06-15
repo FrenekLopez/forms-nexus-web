@@ -20,7 +20,7 @@ export default function Home() {
     setStatus("Enviando...");
 
     try {
-      const response = await fetch("https://9cu4h29q61.execute-api.us-east-2.amazonaws.com/notifications", {
+      const response = await fetch("https://api.freneklopez.dev/notifications", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
