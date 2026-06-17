@@ -15,9 +15,8 @@ export default function Home() {
 
     try {
       // Endpoint configured via Vercel environment variables
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://tu-api-id.execute-api.us-east-2.amazonaws.com/notifications";
-
-    
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL as string;
+      
       // Extract payload using native FormData API for optimal memory usage
       const payload = {
         nombre: formData.get("nombre"),
