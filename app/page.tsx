@@ -15,7 +15,7 @@ export default function Home() {
 
     try {
       // Endpoint configured via Vercel environment variables
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL as string;
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://tu-api-id.execute-api.us-east-2.amazonaws.com/notifications";
       
       // Extract payload using native FormData API for optimal memory usage
       const payload = {
@@ -87,7 +87,8 @@ export default function Home() {
         <section className="border-t border-zinc-800 pt-16" id="contacto">
           <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-8 md:p-12">
             <div className="mb-8">
-              <h3 className="text-2xl font-bold mb-2">Contactame.</h3>
+              <h3 className="text-2xl font-bold mb-2">Contactame</h3>
+              
             </div>
 
             <form ref={formRef} action={actionSubmit} className="flex flex-col gap-6">
