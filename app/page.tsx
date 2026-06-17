@@ -15,8 +15,9 @@ export default function Home() {
 
     try {
       // Endpoint configured via Vercel environment variables
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL as string;
-      
+      const apiEndpoint = process.env.NEXT_PUBLIC_API_URL || "https://tu-api-id.execute-api.us-east-2.amazonaws.com/notifications";
+
+    
       // Extract payload using native FormData API for optimal memory usage
       const payload = {
         nombre: formData.get("nombre"),
@@ -87,11 +88,7 @@ export default function Home() {
         <section className="border-t border-zinc-800 pt-16" id="contacto">
           <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-8 md:p-12">
             <div className="mb-8">
-              <h3 className="text-2xl font-bold mb-2">Contacto / Forms Nexus</h3>
-              <p className="text-zinc-500">
-                Este formulario está conectado directamente a mi arquitectura Serverless en AWS. 
-                Los mensajes son procesados y enrutados en tiempo real.
-              </p>
+              <h3 className="text-2xl font-bold mb-2">Contactame.</h3>
             </div>
 
             <form ref={formRef} action={actionSubmit} className="flex flex-col gap-6">
@@ -104,7 +101,7 @@ export default function Home() {
                     name="nombre"
                     required
                     className="bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-3 text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-colors"
-                    placeholder="Tu nombre completo"
+                    placeholder="Tu nombre"
                   />
                 </div>
                 
@@ -129,8 +126,8 @@ export default function Home() {
                   defaultValue="telegram"
                   className="bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-3 text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-colors appearance-none"
                 >
-                  <option value="telegram">Vía Telegram</option>
-                  <option value="email">Vía Email</option>
+                  <option value="telegram">Telegram</option>
+                  <option value="email">Email</option>
                 </select>
               </div>
 
@@ -151,17 +148,17 @@ export default function Home() {
                 disabled={status === "loading"}
                 className="mt-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 px-6 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
               >
-                {status === "loading" ? "Enviando mensaje..." : "Enviar Mensaje Seguro"}
+                {status === "loading" ? "Enviando mensaje..." : "Enviar Mensaje"}
               </button>
 
               {status === "success" && (
                 <p className="text-green-400 text-sm font-medium text-center bg-green-400/10 py-2 rounded-lg">
-                  ¡Mensaje enviado con éxito a la nube!
+                  ¡Mensaje enviado con éxito!
                 </p>
               )}
               {status === "error" && (
                 <p className="text-red-400 text-sm font-medium text-center bg-red-400/10 py-2 rounded-lg">
-                  Hubo un error al enviar. Revisa la consola o intenta más tarde.
+                  Hubo un error al enviar. Intenta más tarde.
                 </p>
               )}
             </form>
