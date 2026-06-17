@@ -1,38 +1,17 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+// Initialize Inter font for clean, modern typography
+const inter = Inter({ subsets: ["latin"] });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
+// Global SEO metadata configuration for Next.js App Router.
+// This object is parsed server-side to generate <head> tags natively.
 export const metadata: Metadata = {
-  title: "Eric Lopez Rosales (Frenek) | Software Engineer",
-  description: "Portafolio oficial de Eric Frenek Lopez Rosales. Desarrollador Backend especializado en Go, AWS CDK, integraciones de API y arquitecturas Serverless.",
-  keywords: [
-    "Eric Lopez Rosales", 
-    "Frenek Lopez", 
-    "Eric Frenek", 
-    "Backend Engineer", 
-    "Go Developer", 
-    "AWS CDK", 
-    "Serverless", 
-    "Gin Framework",
-    "Docker"
-  ],
-  openGraph: {
-    title: "Eric Lopez Rosales (Frenek) | Software Engineer",
-    description: "Construyendo infraestructura sólida y código limpio. Especialista en Go y AWS.",
-    url: "https://freneklopez.dev",
-    siteName: "Frenek Lopez Portfolio",
-    type: "website",
-  },
+  title: "Eric Lopez Rosales | Software Engineer",
+  description: "Portafolio profesional de Eric Lopez Rosales (Frenek). Desarrollador backend y cloud con experiencia en Go y AWS.",
+  keywords: ["Software Engineer", "Go", "Golang", "AWS", "Backend", "Serverless", "Developer"],
+  authors: [{ name: "Eric Lopez Rosales" }],
 };
 
 export default function RootLayout({
@@ -41,11 +20,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    // 'scroll-smooth' enables native smooth scrolling for anchor links (e.g., #contacto)
+    <html lang="es" className="scroll-smooth">
+      <body 
+        className={`${inter.className} bg-zinc-950 text-zinc-100 antialiased selection:bg-blue-500/30`}
+      >
+        {children}
+      </body>
     </html>
   );
 }

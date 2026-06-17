@@ -1,116 +1,173 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState, useRef } from "react";
 
 export default function Home() {
-  const [status, setStatus] = useState("");
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-    target_channel: "telegram", // Por defecto enviará a Telegram
-  });
+  // Form UI state for visual feedback
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  
+  // Native ref to reset the form without triggering React re-renders
+  const formRef = useRef<HTMLFormElement>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus("Enviando...");
+  // Form submission handler utilizing React 19+ Action standard
+  const actionSubmit = async (formData: FormData) => {
+    setStatus("loading");
 
     try {
-      const response = await fetch("https://api.freneklopez.dev/notifications", {
+      // Endpoint configured via Vercel environment variables
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL as string;
+      
+      // Extract payload using native FormData API for optimal memory usage
+      const payload = {
+        nombre: formData.get("nombre"),
+        correo: formData.get("correo"),
+        destino: formData.get("destino"),
+        mensaje: formData.get("mensaje"),
+      };
+
+      const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
-      if (response.ok) {
-        setStatus("¡Mensaje enviado con éxito!");
-        setFormData({ name: "", email: "", message: "", target_channel: "telegram" }); // Limpiar formulario
-      } else {
-        setStatus("Error al enviar el mensaje. Revisa la consola.");
-      }
+      if (!response.ok) throw new Error("Network response was not ok");
+      
+      setStatus("success");
+      formRef.current?.reset(); 
+      
+      setTimeout(() => setStatus("idle"), 3000);
     } catch (error) {
-      console.error("Error de red:", error);
-      setStatus("Error de conexión con el servidor.");
+      console.error("Form submission error:", error);
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 3000);
     }
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-zinc-900 p-4">
-      <div className="bg-zinc-800 p-8 rounded-xl shadow-2xl w-full max-w-md border border-zinc-700">
-        <h1 className="text-2xl font-bold text-white mb-6 text-center">Contacto Forms Nexus</h1>
+    <main className="min-h-screen bg-zinc-950 text-zinc-100 font-sans selection:bg-blue-500/30">
+      <div className="max-w-4xl mx-auto px-6 py-20 md:py-32 flex flex-col gap-24">
         
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-zinc-300 mb-1">Nombre</label>
-            <input
-              type="text"
-              name="name"
-              required
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full px-4 py-2 bg-zinc-900 border border-zinc-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
-              placeholder="Tu nombre"
-            />
+        {/* Hero Section */}
+        <section className="flex flex-col md:flex-row gap-10 items-center md:items-start">
+          <div className="w-40 h-40 shrink-0 rounded-full bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center shadow-xl shadow-blue-900/20">
+            <span className="text-4xl font-bold text-white">EL</span>
           </div>
-
-          <div>
-            <label className="block text-sm font-medium text-zinc-300 mb-1">Correo Electrónico</label>
-            <input
-              type="email"
-              name="email"
-              required
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full px-4 py-2 bg-zinc-900 border border-zinc-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
-              placeholder="tu@correo.com"
-            />
+          
+          <div className="text-center md:text-left">
+            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">
+              Eric Lopez Rosales <span className="text-blue-500">.</span>
+            </h1>
+            <h2 className="text-xl md:text-2xl text-zinc-400 font-medium mb-6">
+              Software Engineer | Backend & Cloud Architecture
+            </h2>
+            <p className="text-lg text-zinc-500 leading-relaxed max-w-2xl">
+              Especializado en construir sistemas robustos, escalables y orientados a eventos. 
+              Apasionado por Go, las arquitecturas Serverless en AWS y el diseño de APIs limpias. 
+              Transformo problemas complejos en código eficiente.
+            </p>
           </div>
+        </section>
 
-          <div>
-            <label className="block text-sm font-medium text-zinc-300 mb-1">Destino de la Notificación</label>
-            <select
-              name="target_channel"
-              value={formData.target_channel}
-              onChange={handleChange}
-              className="w-full px-4 py-2 bg-zinc-900 border border-zinc-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
-            >
-              <option value="telegram">Telegram</option>
-              <option value="email">Correo Electrónico (SES)</option>
-            </select>
+        {/* Tech Stack Section */}
+        <section className="border-t border-zinc-800 pt-16">
+          <h3 className="text-2xl font-bold mb-8">Mi Stack Principal</h3>
+          <div className="flex flex-wrap gap-3">
+            {["Go (Golang)", "AWS CDK", "Serverless", "Gin Framework", "Next.js", "Docker", "TypeScript", "DynamoDB"].map((tech) => (
+              <span key={tech} className="px-4 py-2 bg-zinc-900 border border-zinc-800 rounded-full text-sm font-medium text-zinc-300">
+                {tech}
+              </span>
+            ))}
           </div>
+        </section>
 
-          <div>
-            <label className="block text-sm font-medium text-zinc-300 mb-1">Mensaje</label>
-            <textarea
-              name="message"
-              required
-              rows={4}
-              value={formData.message}
-              onChange={handleChange}
-              className="w-full px-4 py-2 bg-zinc-900 border border-zinc-600 rounded-lg text-white focus:outline-none focus:border-blue-500 resize-none"
-              placeholder="Escribe tu mensaje aquí..."
-            ></textarea>
+        {/* Contact Form Section */}
+        <section className="border-t border-zinc-800 pt-16" id="contacto">
+          <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-8 md:p-12">
+            <div className="mb-8">
+              <h3 className="text-2xl font-bold mb-2">Contacto / Forms Nexus</h3>
+              <p className="text-zinc-500">
+                Este formulario está conectado directamente a mi arquitectura Serverless en AWS. 
+                Los mensajes son procesados y enrutados en tiempo real.
+              </p>
+            </div>
+
+            <form ref={formRef} action={actionSubmit} className="flex flex-col gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="nombre" className="text-sm font-medium text-zinc-400">Nombre</label>
+                  <input
+                    type="text"
+                    id="nombre"
+                    name="nombre"
+                    required
+                    className="bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-3 text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-colors"
+                    placeholder="Tu nombre completo"
+                  />
+                </div>
+                
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="correo" className="text-sm font-medium text-zinc-400">Correo Electrónico</label>
+                  <input
+                    type="email"
+                    id="correo"
+                    name="correo"
+                    required
+                    className="bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-3 text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-colors"
+                    placeholder="tu@email.com"
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label htmlFor="destino" className="text-sm font-medium text-zinc-400">Canal de Notificación Preferido</label>
+                <select
+                  id="destino"
+                  name="destino"
+                  defaultValue="telegram"
+                  className="bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-3 text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-colors appearance-none"
+                >
+                  <option value="telegram">Vía Telegram</option>
+                  <option value="email">Vía Email</option>
+                </select>
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label htmlFor="mensaje" className="text-sm font-medium text-zinc-400">Mensaje</label>
+                <textarea
+                  id="mensaje"
+                  name="mensaje"
+                  required
+                  rows={4}
+                  className="bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-3 text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-colors resize-none"
+                  placeholder="Hola Eric, me interesa platicar sobre una oportunidad..."
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                disabled={status === "loading"}
+                className="mt-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 px-6 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+              >
+                {status === "loading" ? "Enviando mensaje..." : "Enviar Mensaje Seguro"}
+              </button>
+
+              {status === "success" && (
+                <p className="text-green-400 text-sm font-medium text-center bg-green-400/10 py-2 rounded-lg">
+                  ¡Mensaje enviado con éxito a la nube!
+                </p>
+              )}
+              {status === "error" && (
+                <p className="text-red-400 text-sm font-medium text-center bg-red-400/10 py-2 rounded-lg">
+                  Hubo un error al enviar. Revisa la consola o intenta más tarde.
+                </p>
+              )}
+            </form>
           </div>
+        </section>
 
-          <button
-            type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
-          >
-            Enviar Mensaje
-          </button>
-        </form>
-
-        {status && (
-          <p className="mt-4 text-center text-sm font-medium text-zinc-300">
-            {status}
-          </p>
-        )}
       </div>
     </main>
   );
