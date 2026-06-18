@@ -95,7 +95,7 @@ export default function Home() {
                 Let's talk
               </a>
               
-              <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="border border-slate-600 hover:border-slate-400 text-white px-8 py-3 rounded text-sm font-semibold transition-all">
+              <a href="/cv-eric.pdf" target="_blank" rel="noopener noreferrer" className="border border-slate-600 hover:border-slate-400 text-white px-8 py-3 rounded text-sm font-semibold transition-all">
                 My resume
               </a>
             </div>
