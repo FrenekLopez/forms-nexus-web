@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef } from "react";
+import Image from "next/image";
 
 export default function Home() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -100,16 +101,20 @@ export default function Home() {
             </div>
           </div>
 
+          
           <div className="flex-1 flex justify-center md:justify-end relative">
             <div className="relative w-72 h-72 md:w-96 md:h-96 rounded-full border-[12px] border-orange-500/10 flex items-center justify-center">
               <div className="absolute inset-6 rounded-full border border-orange-500/30"></div>
               
-              
-              <div className="w-56 h-56 md:w-72 md:h-72 rounded-full bg-[#1a2332] z-10 overflow-hidden shadow-2xl flex items-center justify-center text-slate-600">
-                <img 
+              {/* Container for the optimized Next.js Image component */}
+              <div className="w-56 h-56 md:w-72 md:h-72 rounded-full bg-[#1a2332] z-10 overflow-hidden shadow-2xl flex items-center justify-center text-slate-600 relative">
+                <Image 
                   src="/desarrollador-eric.jpg" 
-                  alt="Eric Lopez Profile" 
+                  alt="Eric Lopez Profile"
+                  width={300}
+                  height={300}
                   className="w-full h-full object-cover"
+                  priority
                 />
               </div>
             </div>
@@ -125,6 +130,7 @@ export default function Home() {
             <span>React</span>
             <span>Docker</span>
             <span>GitHub</span>
+            <span>Git</span>
           </div>
         </section>
 
