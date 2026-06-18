@@ -3,30 +3,31 @@
 import React, { useState, useRef } from "react";
 
 export default function Home() {
-  // Estado del Formulario
+  // Form State
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const formRef = useRef<HTMLFormElement>(null);
 
-  // Lógica de Envío Estricta (Forms Nexus)
+  // Strict Submission Logic (Forms Nexus)
   const actionSubmit = async (formData: FormData) => {
     setStatus("loading");
 
-    // ESTRICTO: Solo usa la variable de entorno, sin URLs expuestas (Hardcoded).
-    // El "as string" le asegura a TypeScript que no será undefined en runtime.
+    // STRICT: Uses only the environment variable, no hardcoded URLs.
+    // The "as string" assertion guarantees TypeScript it won't be undefined at runtime.
     const apiUrl = process.env.NEXT_PUBLIC_API_URL as string;
 
     if (!apiUrl) {
-      console.error("ERROR CRÍTICO: La variable NEXT_PUBLIC_API_URL no está definida en Vercel o .env.local");
+      console.error("CRITICAL ERROR: NEXT_PUBLIC_API_URL variable is not defined in Vercel or .env.local");
       setStatus("error");
       return;
     }
 
     try {
+      // ⚠️ FIX: Map data to the exact schema of the AWS (Go) backend
       const payload = {
-        nombre: formData.get("nombre"),
-        correo: formData.get("correo"),
-        destino: formData.get("destino"),
-        mensaje: formData.get("mensaje"),
+        name: formData.get("name"),
+        email: formData.get("email"),
+        target_channel: formData.get("target_channel"),
+        message: formData.get("message"),
       };
 
       const response = await fetch(apiUrl, {
@@ -48,7 +49,7 @@ export default function Home() {
   };
 
   return (
-    // Fondo oscuro estilo Slate/Navy de tu diseño de referencia
+    // Dark background Slate/Navy style from your reference design
     <main className="min-h-screen bg-[#0f1624] text-slate-300 font-sans selection:bg-orange-500/30">
       
       {/* NAVBAR */}
@@ -69,7 +70,7 @@ export default function Home() {
         {/* --- HERO SECTION --- */}
         <section className="flex flex-col-reverse md:flex-row gap-16 items-center justify-between pt-12">
           
-          {/* Lado Izquierdo: Textos */}
+          {/* Left Side: Texts */}
           <div className="flex-1 text-center md:text-left flex flex-col items-center md:items-start">
             <div className="flex items-center gap-4 mb-4">
               <span className="h-[2px] w-12 bg-orange-500 inline-block"></span>
@@ -96,21 +97,21 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Lado Derecho: Foto con aros circulares */}
+          {/* Right Side: Photo with circular rings */}
           <div className="flex-1 flex justify-center md:justify-end relative">
             <div className="relative w-72 h-72 md:w-96 md:h-96 rounded-full border-[12px] border-orange-500/10 flex items-center justify-center">
               <div className="absolute inset-6 rounded-full border border-orange-500/30"></div>
               
-              {/* Contenedor de la Foto. Cuando subas tu imagen a la carpeta public,
-                  puedes cambiar este div por un tag <img> */}
+              {/* Photo Container. When you upload your image to the public folder,
+                  you can change this div for an <img> tag */}
               <div className="w-56 h-56 md:w-72 md:h-72 rounded-full bg-[#1a2332] z-10 overflow-hidden shadow-2xl flex items-center justify-center text-slate-600">
-                [Tu Foto Aquí]
+                [Your Photo Here]
               </div>
             </div>
           </div>
         </section>
 
-        {/* --- CINTA DE TECNOLOGÍAS --- */}
+        {/* --- TECHNOLOGIES RIBBON --- */}
         <section className="border-y border-slate-800/50 py-8">
           <div className="flex flex-wrap justify-center md:justify-between gap-6 md:gap-12 text-slate-500 text-sm font-semibold tracking-wider uppercase">
             <span>Go</span>
@@ -122,11 +123,11 @@ export default function Home() {
           </div>
         </section>
 
-        {/* --- FORMS NEXUS (Diseño Minimalista) --- */}
+        {/* --- FORMS NEXUS (Minimalist Design) --- */}
         <section id="contact" className="pt-16">
           <div className="flex flex-col md:flex-row gap-16 items-start">
             
-            {/* Lado Izquierdo Contacto */}
+            {/* Left Side: Contact */}
             <div className="flex-1">
               <div className="flex items-center gap-4 mb-4">
                 <span className="h-[2px] w-12 bg-orange-500 inline-block"></span>
@@ -137,14 +138,14 @@ export default function Home() {
               </h2>
             </div>
 
-            {/* Lado Derecho: Inputs Minimalistas */}
+            {/* Right Side: Minimalist Inputs */}
             <div className="flex-1 w-full">
               <form ref={formRef} action={actionSubmit} className="flex flex-col gap-8">
                 
                 <div>
                   <input
                     type="text"
-                    name="nombre"
+                    name="name"
                     required
                     placeholder="Name"
                     className="w-full bg-transparent border-b border-slate-700 pb-3 text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 transition-colors"
@@ -154,27 +155,33 @@ export default function Home() {
                 <div>
                   <input
                     type="email"
-                    name="correo"
+                    name="email"
                     required
                     placeholder="Email"
                     className="w-full bg-transparent border-b border-slate-700 pb-3 text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 transition-colors"
                   />
                 </div>
 
-                <div>
+                <div className="relative">
                   <select
-                    name="destino"
+                    name="target_channel"
                     defaultValue="telegram"
-                    className="w-full bg-transparent border-b border-slate-700 pb-3 text-slate-500 focus:outline-none focus:border-orange-500 transition-colors appearance-none"
+                    className="w-full bg-transparent border-b border-slate-700 pb-3 text-white focus:outline-none focus:border-orange-500 transition-colors appearance-none cursor-pointer"
                   >
-                    <option value="telegram" className="bg-[#0f1624]">Route to: Telegram</option>
-                    <option value="email" className="bg-[#0f1624]">Route to: Email</option>
+                    <option value="telegram" className="bg-[#0f1624] text-white">Route to: Telegram</option>
+                    <option value="email" className="bg-[#0f1624] text-white">Route to: Email</option>
                   </select>
+                  {/* Custom arrow */}
+                  <div className="pointer-events-none absolute right-0 top-0 bottom-3 flex items-center px-2 text-slate-500">
+                    <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                  </div>
                 </div>
 
                 <div>
                   <textarea
-                    name="mensaje"
+                    name="message"
                     required
                     rows={1}
                     placeholder="Message"
@@ -192,8 +199,8 @@ export default function Home() {
                   </button>
                 </div>
 
-                {status === "success" && <p className="text-orange-400 text-sm mt-2">¡Mensaje enviado exitosamente!</p>}
-                {status === "error" && <p className="text-red-500 text-sm mt-2">Error al enviar. Revisa la consola o asegúrate de que AWS responda.</p>}
+                {status === "success" && <p className="text-orange-400 text-sm mt-2">Message sent successfully!</p>}
+                {status === "error" && <p className="text-red-500 text-sm mt-2">Error sending message. Check the console or make sure AWS is responding.</p>}
               </form>
             </div>
           </div>
