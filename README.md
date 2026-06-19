@@ -35,8 +35,8 @@ Payloads are validated on the client side and dispatched to an AWS API Gateway, 
 
 Clone the repository:
 
-git clone [https://github.com/FrenekLopez/freneklopez-dev.git](https://github.com/FrenekLopez/freneklopez-dev.git)
-cd freneklopez-dev
+git clone [https://github.com/FrenekLopez/freneklopez.git](https://github.com/FrenekLopez/freneklopez.git)
+cd freneklopez
 
 
 Install dependencies:
