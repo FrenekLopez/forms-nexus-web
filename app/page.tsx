@@ -55,14 +55,14 @@ const experienceData: TimelineItem[] = [
 const educationData: TimelineItem[] = [
   {
     id: "edu-1",
-    role: "Ingeniería en Sistemas Computacionales",
-    company: "Universidad UTEL",
+    role: "Computer Systems Engineering",
+    company: "UTEL University",
     period: "Expected 2026",
     description: "In progress / Final phase of degree completion. Focused on advanced logical thinking, strong problem-solving capabilities, and scalable software architecture.",
   },
   {
     id: "edu-2",
-    role: "Técnico en Computación",
+    role: "Computer Technician",
     company: "CECYTE",
     period: "2010 - 2014",
     description: "Graduated. Acquired solid foundational knowledge in computer systems, hardware troubleshooting, and basic programming logic.",
@@ -389,7 +389,7 @@ export default function Home() {
           
           <div ref={carouselRef} className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-8 pt-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden scroll-smooth">
             {projectsData.map((project) => (
-              <div key={project.id} className="min-w-[85vw] md:min-w-[450px] snap-center group relative bg-[#131b2c] rounded-[2rem] p-8 md:p-10 border border-slate-800/60 hover:border-blue-500/40 transition-all duration-500 overflow-hidden shrink-0 flex flex-col justify-between">
+              <div key={project.id} className="w-[85vw] md:w-[450px] snap-center group relative bg-[#131b2c] rounded-[2rem] p-8 md:p-10 border border-slate-800/60 hover:border-blue-500/40 transition-all duration-500 overflow-hidden shrink-0 flex flex-col justify-between">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-[50px] group-hover:bg-blue-500/20 transition-all duration-500 pointer-events-none"></div>
                 <div>
                   <div className="flex justify-between items-start mb-6">
@@ -397,7 +397,7 @@ export default function Home() {
                     <span className="text-xs font-bold uppercase tracking-widest text-slate-500">Backend</span>
                   </div>
                   <h4 className="text-2xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors">{project.title}</h4>
-                  <p className="text-slate-400 text-sm leading-relaxed mb-8 line-clamp-4">{project.description}</p>
+                  <p className="text-slate-400 text-sm leading-relaxed mb-8">{project.description}</p>
                 </div>
                 <div>
                   <div className="mb-6">
