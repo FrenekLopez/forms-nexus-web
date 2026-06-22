@@ -23,7 +23,8 @@ export default function RootLayout({
     // 'scroll-smooth' enables native smooth scrolling for anchor links (e.g., #contacto)
     <html lang="es" className="scroll-smooth">
       <body 
-        className={`${inter.className} bg-zinc-950 text-zinc-100 antialiased selection:bg-blue-500/30`}
+        className={`${inter.className} bg-[#0f1624] text-slate-300 antialiased selection:bg-blue-500/30`}
+
       >
         {children}
       </body>
