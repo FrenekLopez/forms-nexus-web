@@ -13,7 +13,7 @@ export default function Footer() {
         </div>
         <div className="flex items-center gap-5">
           <a 
-            href="https://github.com" 
+            href="https://github.com/FrenekLopez" 
             target="_blank" 
             rel="noopener noreferrer" 
             className="text-slate-400 hover:text-blue-500 hover:-translate-y-1 transition-all duration-300 focus-visible:outline-none focus-visible:text-blue-500" 
@@ -24,7 +24,7 @@ export default function Footer() {
             </svg>
           </a>
           <a 
-            href="https://linkedin.com" 
+            href="https://www.linkedin.com/in/eric-lopez-650196348/" 
             target="_blank" 
             rel="noopener noreferrer" 
             className="text-slate-400 hover:text-blue-500 hover:-translate-y-1 transition-all duration-300 focus-visible:outline-none focus-visible:text-blue-500" 

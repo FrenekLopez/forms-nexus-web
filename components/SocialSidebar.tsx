@@ -15,7 +15,7 @@ export default function SocialSidebar() {
       className="hidden md:flex flex-col gap-6 fixed left-8 top-1/2 -translate-y-1/2 z-50"
     >
       <a 
-        href="https://linkedin.com" 
+        href="https://www.linkedin.com/in/eric-lopez-650196348/" 
         target="_blank" 
         rel="noopener noreferrer" 
         className="text-slate-500 hover:text-blue-500 hover:-translate-y-1 transition-all duration-300 focus-visible:outline-none focus-visible:text-blue-500" 
@@ -26,7 +26,7 @@ export default function SocialSidebar() {
         </svg>
       </a>
       <a 
-        href="https://github.com" 
+        href="https://github.com/FrenekLopez" 
         target="_blank" 
         rel="noopener noreferrer" 
         className="text-slate-500 hover:text-blue-500 hover:-translate-y-1 transition-all duration-300 focus-visible:outline-none focus-visible:text-blue-500" 
@@ -37,7 +37,7 @@ export default function SocialSidebar() {
         </svg>
       </a>
       <a 
-        href="https://x.com" 
+        href="https://x.com/LrFrenek" 
         target="_blank" 
         rel="noopener noreferrer" 
         className="text-slate-500 hover:text-blue-500 hover:-translate-y-1 transition-all duration-300 focus-visible:outline-none focus-visible:text-blue-500" 
