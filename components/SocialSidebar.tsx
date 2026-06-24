@@ -15,7 +15,7 @@ export default function SocialSidebar() {
       className="hidden md:flex flex-col gap-6 fixed left-8 top-1/2 -translate-y-1/2 z-50"
     >
       <a 
-        href="https://www.linkedin.com/in/eric-lopez-650196348/" 
+        href="www.linkedin.com/in/eric-frenek-lopez-rosales-650196348" 
         target="_blank" 
         rel="noopener noreferrer" 
         className="text-slate-500 hover:text-blue-500 hover:-translate-y-1 transition-all duration-300 focus-visible:outline-none focus-visible:text-blue-500" 
