@@ -71,7 +71,7 @@ export default function RootLayout({
         {children}
         <Script
         defer
-        src="http://3.144.237.139:3000/script.js"
+        src="/stats/script.js"
         data-website-id="b22f6a23-d889-488d-84b2-90af6cd8878c"
         strategy="lazyOnload"
         />
