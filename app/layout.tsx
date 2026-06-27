@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Script from "next/script";
 
 // Initialize Inter font for clean, modern typography
 const inter = Inter({ subsets: ["latin"] });
@@ -68,6 +69,12 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.className} bg-[#0f1624] text-slate-300 antialiased selection:bg-blue-500/30`}>
         {children}
+        <Script
+        defer
+        src="http://3.144.237.139:3000/script.js"
+        data-website-id="b22f6a23-d889-488d-84b2-90af6cd8878c"
+        strategy="lazyOnload"
+        />
       </body>
     </html>
   );
